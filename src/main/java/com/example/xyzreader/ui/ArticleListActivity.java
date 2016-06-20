@@ -8,6 +8,7 @@ import android.content.IntentFilter;
 import android.content.Loader;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.AppCompatActivity;
@@ -25,6 +26,7 @@ import com.example.xyzreader.R;
 import com.example.xyzreader.data.ArticleLoader;
 import com.example.xyzreader.data.ItemsContract;
 import com.example.xyzreader.data.UpdaterService;
+import com.example.xyzreader.util.AndroidUtils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -54,6 +56,12 @@ public class ArticleListActivity extends AppCompatActivity implements
         getLoaderManager().initLoader(0, null, this);
         if (savedInstanceState == null) {
             refresh();
+        }
+        if(!AndroidUtils.isConnected(this)){
+            Snackbar snackbar=Snackbar.make(mSwipeRefreshLayout, R.string.no_internet,Snackbar.LENGTH_INDEFINITE);
+            View snackView= snackbar.getView();
+            snackView.setBackgroundColor(getResources().getColor(R.color.theme_accent));
+            snackbar.show();
         }
     }
 
