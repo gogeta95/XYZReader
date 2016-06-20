@@ -36,7 +36,7 @@ import butterknife.ButterKnife;
  * activity presents a grid of items as cards.
  */
 public class ArticleListActivity extends AppCompatActivity implements
-        LoaderManager.LoaderCallbacks<Cursor> {
+        LoaderManager.LoaderCallbacks<Cursor>,SwipeRefreshLayout.OnRefreshListener {
     @BindView(R.id.toolbar)
     Toolbar mToolbar;
     @BindView(R.id.swipe_refresh_layout)
@@ -50,10 +50,16 @@ public class ArticleListActivity extends AppCompatActivity implements
         setContentView(R.layout.activity_article_list);
         ButterKnife.bind(this);
         mSwipeRefreshLayout.setColorSchemeColors(getResources().getIntArray(R.array.progress_colors));
+        mSwipeRefreshLayout.setOnRefreshListener(this);
         getLoaderManager().initLoader(0, null, this);
         if (savedInstanceState == null) {
             refresh();
         }
+    }
+
+    @Override
+    public void onRefresh() {
+        refresh();
     }
 
     private void refresh() {
