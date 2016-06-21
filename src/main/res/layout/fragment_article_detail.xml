@@ -102,6 +102,7 @@
         android:layout_margin="@dimen/fab_margin"
         android:contentDescription="@string/action_share"
         android:src="@drawable/ic_share"
-        app:elevation="@dimen/fab_elevation"/>
+        app:elevation="@dimen/fab_elevation"
+        app:pressedTranslationZ="@dimen/fab_press_translation_z"/>
 
 </FrameLayout>

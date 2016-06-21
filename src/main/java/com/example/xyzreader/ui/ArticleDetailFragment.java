@@ -29,6 +29,7 @@ import com.example.xyzreader.R;
 import com.example.xyzreader.data.ArticleLoader;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 
 /**
  * A fragment representing a single Article detail screen. This fragment is
@@ -42,15 +43,18 @@ public class ArticleDetailFragment extends Fragment implements
     private static final float PARALLAX_FACTOR = 1.25f;
     @BindView(R.id.share_fab)
     FloatingActionButton fab;
+    @BindView(R.id.scrollview)
+    ObservableScrollView mScrollView;
+    @BindView(R.id.photo_container)
+    View mPhotoContainerView;
+    @BindView(R.id.photo)
+    ImageView mPhotoView;
     private Cursor mCursor;
     private long mItemId;
     private View mRootView;
     private int mMutedColor = 0xFF333333;
-    private ObservableScrollView mScrollView;
     private ColorDrawable mStatusBarColorDrawable;
     private int mTopInset;
-    private View mPhotoContainerView;
-    private ImageView mPhotoView;
     private int mScrollY;
     private boolean mIsCard = false;
     private int mStatusBarFullOpacityBottom;
@@ -115,10 +119,9 @@ public class ArticleDetailFragment extends Fragment implements
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-            Bundle savedInstanceState) {
+                             Bundle savedInstanceState) {
         mRootView = inflater.inflate(R.layout.fragment_article_detail, container, false);
-
-        mScrollView = (ObservableScrollView) mRootView.findViewById(R.id.scrollview);
+        ButterKnife.bind(this, mRootView);
         mScrollView.setCallbacks(new ObservableScrollView.Callbacks() {
             @Override
             public void onScrollChanged() {
@@ -128,9 +131,6 @@ public class ArticleDetailFragment extends Fragment implements
                 updateStatusBar();
             }
         });
-
-        mPhotoView = (ImageView) mRootView.findViewById(R.id.photo);
-        mPhotoContainerView = mRootView.findViewById(R.id.photo_container);
 
         mStatusBarColorDrawable = new ColorDrawable(0);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -211,7 +211,7 @@ public class ArticleDetailFragment extends Fragment implements
         } else {
             mRootView.setVisibility(View.GONE);
             titleView.setText("N/A");
-            bylineView.setText("N/A" );
+            bylineView.setText("N/A");
             bodyView.setText("N/A");
         }
     }
